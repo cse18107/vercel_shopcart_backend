@@ -4,23 +4,13 @@ const sendToken = (user,statusCode,res)=>{
 
     const token = user.getJWTToken();
 
-    // options for cookie
-    const options = {
-        expires:new Date(
-            Date.now() + process.env.COOKIE_EXPIRE*24*60*60*1000
-        ),
-        sameSite : "none",
-    secure: true,
-    domain: "http://localhost:3000",
-        httpOnly:true
-    };
-
-    res.setHeader("token","tokens");
-
-    res.status(statusCode).cookie('token',token,options).json({
+    res.status(statusCode).json({
         success:true,
         user,
-        token
+        token,
+        expires:new Date(
+            Date.now() + process.env.COOKIE_EXPIRE*24*60*60*1000
+        )
     });
 };
 
